@@ -4,6 +4,7 @@ import cadastrousuario.Repository.EnderecoRepository;
 import cadastrousuario.Repository.UsuarioRepository;
 import cadastrousuario.model.Endereco;
 import cadastrousuario.model.Usuario;
+import org.apache.naming.factory.SendMailFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,6 +35,11 @@ public class ControllerUsuario {
     @GetMapping("/listar")
     public ResponseEntity<List<Usuario>> listarTodos() {
         return ResponseEntity.ok(repository.findAll());
+    }
+
+    @GetMapping()
+    public ResponseEntity exibirUsuario(@PathVariable String email){
+        return ResponseEntity.status(200).body(repository.findByEmail(email));
     }
 
     @PostMapping("/salvar")
