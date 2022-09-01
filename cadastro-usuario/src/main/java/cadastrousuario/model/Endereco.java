@@ -1,7 +1,15 @@
 package cadastrousuario.model;
 
+import lombok.Data;
 
+import javax.persistence.*;
+
+@Entity
+@Data
 public class Endereco {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idEndereço;
     private String rua;
     private String bairro;
     private String cidade;
@@ -12,36 +20,7 @@ public class Endereco {
         this.cidade = cidade;
     }
 
-    public String getRua() {
-        return rua;
-    }
+    public Endereco() {
 
-    public void setRua(String rua) {
-        this.rua = rua;
-    }
-
-    public String getBairro() {
-        return bairro;
-    }
-
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
-
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    @Override
-    public String toString() {
-        return "Endereco{" +
-                "rua='" + rua + '\'' +
-                ", bairro='" + bairro + '\'' +
-                ", cidade='" + cidade + '\'' +
-                '}';
     }
 }

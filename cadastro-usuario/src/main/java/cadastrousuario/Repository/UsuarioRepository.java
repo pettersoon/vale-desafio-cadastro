@@ -1,4 +1,4 @@
-package Repository;
+package cadastrousuario.Repository;
 
 import cadastrousuario.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;

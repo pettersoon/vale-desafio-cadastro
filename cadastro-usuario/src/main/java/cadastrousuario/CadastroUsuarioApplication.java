@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class CadastroUsuarioApplication {
 
 	public static void main(String[] args) {SpringApplication.run(CadastroUsuarioApplication.class, args);}
+
 	@Bean
 	public PasswordEncoder getPasswordEncoder(){
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
