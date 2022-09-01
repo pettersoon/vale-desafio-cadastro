@@ -1,13 +1,25 @@
 package cadastrousuario.model;
 
+import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
-
+@Entity(name = "Usuario")
 public class Usuario {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     private String nome;
+
+    @Column(unique = true)
     private String email;
+
+    @Size(min = 6)
     private String senha;
+
     private Date idade;
+
     private Endereco endereco;
 
     public Usuario(String nome, String email, String senha, Date idade, Endereco endereco) {
