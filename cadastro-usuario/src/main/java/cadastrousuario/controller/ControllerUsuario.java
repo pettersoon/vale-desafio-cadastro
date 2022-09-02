@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -56,7 +57,7 @@ public class ControllerUsuario {
     }
 
     @PostMapping
-    public ResponseEntity<Usuario> cadastroUsuario(@RequestBody Usuario usuario) {
+    public ResponseEntity<Usuario> cadastroUsuario(@RequestBody Usuario usuario) throws ParseException {
         usuario.setSenha(encoder.encode(usuario.getSenha()));
         try {
             enderecoService.saveAndress(usuario.getFkEnderecoUsuario());

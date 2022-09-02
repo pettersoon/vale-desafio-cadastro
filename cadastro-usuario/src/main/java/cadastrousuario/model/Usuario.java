@@ -18,13 +18,13 @@ public class Usuario {
 
     private String nome;
 
-    @Column(unique = true)
+//    @Column(unique = true)
     private String email;
 
     @Size(min = 6)
     private String senha;
 
-    private Date dataNasc;
+    private String idade;
 
     @ManyToOne()
     private Endereco fkEnderecoUsuario;
@@ -32,11 +32,11 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String nome, String email, String senha, Date dataNasc, Endereco endereco) {
+    public Usuario(String nome, String email, String senha, String idade, Endereco endereco) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
-        this.dataNasc = dataNasc;
+        this.idade = idade;
         this.fkEnderecoUsuario = endereco;
     }
 
