@@ -10,7 +10,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 
 public class UsuarioService {
-    
     @Autowired
     UsuarioRepository repository;
 
