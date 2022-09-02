@@ -4,6 +4,7 @@ import cadastrousuario.Repository.EnderecoRepository;
 import cadastrousuario.Repository.UsuarioRepository;
 import cadastrousuario.model.Endereco;
 import cadastrousuario.model.Usuario;
+import cadastrousuario.service.EnderecoService;
 import org.apache.naming.factory.SendMailFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,8 @@ public class ControllerUsuario {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
+    @Autowired
+    private EnderecoService enderecoService;
 
     @Autowired
     private PasswordEncoder encoder;
@@ -51,13 +54,14 @@ public class ControllerUsuario {
 
     @PostMapping
     public ResponseEntity<Usuario> salvar(@RequestBody Usuario usuario) {
+        Usuario usuarioteste = usuario;
+        usuario.setSenha(encoder.encode(usuario.getSenha()));
         try {
+            enderecoService.saveAndress(usuarioteste.getFkEnderecoUsuario());
             usuario.setSenha(encoder.encode(usuario.getSenha()));
-            Endereco endereco = enderecoRepository.save(usuario.getFkEnderecoUsuario());
-            enderecoRepository.save(endereco);
-            usuario.setSenha(encoder.encode(usuario.getSenha()));
-            usuario.setFkEnderecoUsuario(endereco);
+            usuario.setFkEnderecoUsuario(usuario.getFkEnderecoUsuario());
             repository.save(usuario);
+
         } catch (Exception e) {
             return ResponseEntity.status(406).build();
         }
@@ -75,11 +79,7 @@ public class ControllerUsuario {
                 usuario.getEmail(),
                 usuario.getSenha());
 
-        enderecoRepository.atualizarEndereco(
-                usuario.getFkEnderecoUsuario().getIdEndereco(),
-                usuario.getFkEnderecoUsuario().getRua(),
-                usuario.getFkEnderecoUsuario().getBairro(),
-                usuario.getFkEnderecoUsuario().getCidade());
+        enderecoService.updateAndress(usuario);
         return ResponseEntity.status(202).build();
     }
 }
