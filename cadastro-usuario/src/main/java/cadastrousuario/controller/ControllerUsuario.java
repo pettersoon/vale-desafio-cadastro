@@ -5,6 +5,7 @@ import cadastrousuario.Repository.UsuarioRepository;
 import cadastrousuario.model.Endereco;
 import cadastrousuario.model.Usuario;
 import cadastrousuario.service.EnderecoService;
+import cadastrousuario.service.UsuarioService;
 import org.apache.naming.factory.SendMailFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,6 @@ import java.util.List;
 @RequestMapping("/usuario")
 public class ControllerUsuario {
 
-    /*Banco de dados*/
     @Autowired
     private UsuarioRepository repository;
 
@@ -26,6 +26,9 @@ public class ControllerUsuario {
 
     @Autowired
     private EnderecoService enderecoService;
+
+    @Autowired
+    private UsuarioService usuarioService;
 
     @Autowired
     private PasswordEncoder encoder;
@@ -53,14 +56,13 @@ public class ControllerUsuario {
     }
 
     @PostMapping
-    public ResponseEntity<Usuario> salvar(@RequestBody Usuario usuario) {
-        Usuario usuarioteste = usuario;
+    public ResponseEntity<Usuario> cadastroUsuario(@RequestBody Usuario usuario) {
         usuario.setSenha(encoder.encode(usuario.getSenha()));
         try {
-            enderecoService.saveAndress(usuarioteste.getFkEnderecoUsuario());
+            enderecoService.saveAndress(usuario.getFkEnderecoUsuario());
             usuario.setSenha(encoder.encode(usuario.getSenha()));
             usuario.setFkEnderecoUsuario(usuario.getFkEnderecoUsuario());
-            repository.save(usuario);
+            usuarioService.saveUser(usuario);
 
         } catch (Exception e) {
             return ResponseEntity.status(406).build();
@@ -73,13 +75,8 @@ public class ControllerUsuario {
         if (!repository.existsById(usuario.getIdUsuario())) {
             return ResponseEntity.status(404).build();
         }
-        repository.atualizarUsuario(
-                usuario.getIdUsuario(),
-                usuario.getNome(),
-                usuario.getEmail(),
-                usuario.getSenha());
-
         enderecoService.updateAndress(usuario);
+        usuarioService.updateUser(usuario);
         return ResponseEntity.status(202).build();
     }
 }

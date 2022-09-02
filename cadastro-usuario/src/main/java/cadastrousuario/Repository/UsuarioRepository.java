@@ -10,9 +10,7 @@ import java.util.Date;
 import java.util.Optional;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
-    // Find by email efuta uma consulta no banco de dados buscando no campo email
     Usuario findByIdUsuario(Integer idUsuario);
-
     @Query("update Usuario u set u.nome = ?2, u.email = ?3, u.senha = ?4 where u.idUsuario = ?1")
     @Modifying
     @Transactional
