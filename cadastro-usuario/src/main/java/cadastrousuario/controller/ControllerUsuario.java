@@ -38,7 +38,7 @@ public class ControllerUsuario {
     }
 
     @GetMapping("/{idUsuario}")
-    public ResponseEntity exibirUsuario(@PathVariable Long idUsuario) {
+    public ResponseEntity exibirUsuario(@PathVariable Integer idUsuario) {
         List<Usuario> usuarios = repository.findAll();
         for (Usuario usuario : usuarios
         ) {
@@ -66,23 +66,20 @@ public class ControllerUsuario {
 
     @PutMapping("/alterar")
     public ResponseEntity<Usuario> alterar(@RequestBody Usuario usuario) {
-        if (repository.existsById(usuario.getIdUsuario().intValue())) {
-            try {
-                repository.atualizarUsuario(
-                        usuario.getIdUsuario(),
-                        usuario.getNome(),
-                        usuario.getEmail(),
-                        usuario.getSenha(),
-                        usuario.getDataNasc());
-                enderecoRepository.atualizarEndereco(
-                        usuario.getFkEnderecoUsuario().getIdEndereco(),
-                        usuario.getFkEnderecoUsuario().getRua(),
-                        usuario.getFkEnderecoUsuario().getBairro(),
-                        usuario.getFkEnderecoUsuario().getCidade());
-            } catch (Exception e) {
-                return ResponseEntity.status(406).build();
-            }
+        if (!repository.existsById(usuario.getIdUsuario())) {
+            return ResponseEntity.status(404).build();
         }
+        repository.atualizarUsuario(
+                usuario.getIdUsuario(),
+                usuario.getNome(),
+                usuario.getEmail(),
+                usuario.getSenha());
+
+        enderecoRepository.atualizarEndereco(
+                usuario.getFkEnderecoUsuario().getIdEndereco(),
+                usuario.getFkEnderecoUsuario().getRua(),
+                usuario.getFkEnderecoUsuario().getBairro(),
+                usuario.getFkEnderecoUsuario().getCidade());
         return ResponseEntity.status(202).build();
     }
 }
