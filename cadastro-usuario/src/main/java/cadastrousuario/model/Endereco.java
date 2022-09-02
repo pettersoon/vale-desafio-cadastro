@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Endereco {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idEndereço;
+    private Long idEndereco;
     private String rua;
     private String bairro;
     private String cidade;
