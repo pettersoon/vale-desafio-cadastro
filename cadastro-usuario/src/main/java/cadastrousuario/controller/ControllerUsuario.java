@@ -58,11 +58,8 @@ public class ControllerUsuario {
 
     @PostMapping
     public ResponseEntity<Usuario> cadastroUsuario(@RequestBody Usuario usuario) throws ParseException {
-        usuario.setSenha(encoder.encode(usuario.getSenha()));
         try {
             enderecoService.saveAndress(usuario.getFkEnderecoUsuario());
-            usuario.setSenha(encoder.encode(usuario.getSenha()));
-            usuario.setFkEnderecoUsuario(usuario.getFkEnderecoUsuario());
             usuarioService.saveUser(usuario);
 
         } catch (Exception e) {

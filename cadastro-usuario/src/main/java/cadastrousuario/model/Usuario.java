@@ -18,7 +18,7 @@ public class Usuario {
 
     private String nome;
 
-//    @Column(unique = true)
+    @Column(unique = true)
     private String email;
 
     @Size(min = 6)

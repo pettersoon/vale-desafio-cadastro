@@ -28,10 +28,13 @@ public class UsuarioService {
 
     public void saveUser (Usuario usuario) throws ParseException {
         usuario.setIdade(calcularIdade(usuario.getIdade()));
+        usuario.setSenha(encoder.encode(usuario.getSenha()));
+        usuario.setFkEnderecoUsuario(usuario.getFkEnderecoUsuario());
         usuarioRepository.save(usuario);
     }
 
     public void updateUser (Usuario usuario) {
+        usuario.setSenha(encoder.encode(usuario.getSenha()));
         usuarioRepository.atualizarUsuario(
                 usuario.getIdUsuario(),
                 usuario.getNome(),
